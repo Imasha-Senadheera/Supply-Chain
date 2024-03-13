@@ -12,8 +12,10 @@
   "dependencies": {
     "@neo4j/graphql": "^5.1.0",
     "apollo-server": "^3.13.0",
+    "cors": "^2.8.5",
     "graphql": "^16.8.1",
     "graphql-validation-complexity": "^0.4.2",
+    "jsonwebtoken": "^9.0.2",
     "neo4j-driver": "^5.18.0"
   }
 }
