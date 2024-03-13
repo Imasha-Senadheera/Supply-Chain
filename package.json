@@ -13,6 +13,7 @@
     "@neo4j/graphql": "^5.1.0",
     "apollo-server": "^3.13.0",
     "graphql": "^16.8.1",
+    "graphql-validation-complexity": "^0.4.2",
     "neo4j-driver": "^5.18.0"
   }
 }
