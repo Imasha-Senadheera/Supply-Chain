@@ -1,13 +1,11 @@
 const { ApolloServer } = require('apollo-server');
 const { schema } = require('./schema');
 const { resolvers } = require('./resolvers');
-const { validateQueryDepth, createComplexityLimitRule } = require('graphql-validation-complexity');
 const jwt = require('jsonwebtoken');
 
 const server = new ApolloServer({
   typeDefs: schema,
   resolvers: resolvers,
-  validationRules: [validateQueryDepth(5), createComplexityLimitRule(1000)],
   context: ({ req }) => {
     const token = req.headers.authorization || '';
     try {
@@ -19,6 +17,6 @@ const server = new ApolloServer({
   },
 });
 
-server.listen({ port: 4001 }).then(({ url }) => {
+server.listen({ port: 4002 }).then(({ url }) => {
   console.log(`Server running at ${url}`);
 });

@@ -2,6 +2,10 @@ const { ApolloServer, gql } = require('apollo-server');
 
 // Define your schema using SDL
 const typeDefs = gql`
+  type Query {
+    hello: String!
+  }
+
   type Supplier {
     supplierID: ID!
     name: String!
@@ -67,18 +71,41 @@ const typeDefs = gql`
 
 // Implement resolvers
 const resolvers = {
+  Query: {
+    // Implement your query resolvers here
+  },
   Mutation: {
     createSupplier: (_, { supplierInput }) => {
-      // Logic to create a new supplier
+      // Placeholder logic to create a new supplier
+      const newSupplier = {
+        supplierID: '123',
+        ...supplierInput
+      };
+      return newSupplier;
     },
     createManufacturer: (_, { manufacturerInput }) => {
-      // Logic to create a new manufacturer
+      // Placeholder logic to create a new manufacturer
+      const newManufacturer = {
+        manufacturerID: '456',
+        ...manufacturerInput
+      };
+      return newManufacturer;
     },
     createDistributor: (_, { distributorInput }) => {
-      // Logic to create a new distributor
+      // Placeholder logic to create a new distributor
+      const newDistributor = {
+        distributorID: '789',
+        ...distributorInput
+      };
+      return newDistributor;
     },
     createProduct: (_, { productInput }) => {
-      // Logic to create a new product
+      // Placeholder logic to create a new product
+      const newProduct = {
+        productID: '321',
+        ...productInput
+      };
+      return newProduct;
     },
   },
 };
