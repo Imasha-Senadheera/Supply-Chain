@@ -1,5 +1,3 @@
-// manufacturersDefs.js
-
 const { gql } = require('apollo-server');
 
 const manufacturersDefs = gql`

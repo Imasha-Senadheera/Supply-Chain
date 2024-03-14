@@ -1,5 +1,3 @@
-// productsDefs.js
-
 const { gql } = require('apollo-server');
 
 const productsDefs = gql`
