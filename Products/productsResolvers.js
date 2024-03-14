@@ -1,3 +1,4 @@
+// productsResolvers.js
 const neo4j = require('neo4j-driver');
 
 const productsResolvers = {
@@ -14,6 +15,9 @@ const productsResolvers = {
       driver.close();
 
       return result.records.map(record => record.get('p').properties);
+    },
+    sayHello: () => {
+      return 'Hello World!';
     }
   }
 };

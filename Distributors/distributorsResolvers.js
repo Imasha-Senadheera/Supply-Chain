@@ -14,6 +14,9 @@ const distributorsResolvers = {
       driver.close();
 
       return result.records.map(record => record.get('d').properties);
+    },
+    sayHello: () => {
+      return 'Hello World!';
     }
   }
 };

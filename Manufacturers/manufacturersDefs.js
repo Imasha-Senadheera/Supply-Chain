@@ -1,16 +1,19 @@
-const { gql } = require('apollo-server');
+const { gql } = require('apollo-server-express');
 
-const manufacturersDefs = gql`
-  type Query {
-    manufacturers: [Manufacturer]
-  }
-
+const typeDefs = gql`
   type Manufacturer {
-    manufacturerID: ID!
+    manufacturerID: String!
     name: String!
     product: String!
     location: String!
+    suppliersSupplies: [Supplier!]! @relationship(type: "SUPPLIES", direction: IN)
+    producesProducts: [Product!]! @relationship(type: "PRODUCES", direction: OUT)
+    distributesDistributors: [Distributor!]! @relationship(type: "DISTRIBUTES", direction: OUT)
+  }
+
+  type Query {
+    _empty: String
   }
 `;
 
-module.exports = { manufacturersDefs };
+module.exports = typeDefs;

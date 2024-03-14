@@ -1,7 +1,7 @@
 const { ApolloServer } = require('apollo-server');
 const { mergeTypeDefs, mergeResolvers } = require('@graphql-tools/merge');
 
-const { schema: suppliersDefs } = require('./Suppliers/suppliersDefs.js');
+const { schema: suppliersDefs } = require('./Suppliers/suppliersDefs.js'); 
 const { resolvers: suppliersResolvers } = require('./Suppliers/suppliersResolvers.js');
 
 const { schema: manufacturersDefs } = require('./Manufacturers/manufacturersDefs.js');

@@ -1,6 +1,6 @@
 const neo4j = require('neo4j-driver');
 
-const manufacturersResolvers = {
+const manufacturerResolvers = {
   Query: {
     manufacturers: async () => {
       const uri = 'bolt://localhost:7687';
@@ -14,8 +14,9 @@ const manufacturersResolvers = {
       driver.close();
 
       return result.records.map(record => record.get('m').properties);
-    }
+    },
+    hello: () => 'Hello World!'
   }
 };
 
-module.exports = { manufacturersResolvers };
+module.exports = { manufacturerResolvers };

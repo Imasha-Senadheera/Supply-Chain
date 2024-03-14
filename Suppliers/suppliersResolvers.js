@@ -14,7 +14,8 @@ const suppliersResolvers = {
       driver.close();
 
       return result.records.map(record => record.get('s').properties);
-    }
+    },
+    sayHello: () => 'Hello World!' 
   }
 };
 

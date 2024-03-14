@@ -1,16 +1,17 @@
-const { gql } = require('apollo-server');
+const { gql } = require('apollo-server-express');
 
-const suppliersDefs = gql`
-  type Query {
-    suppliers: [Supplier]
-  }
-
+const typeDefs = gql`
   type Supplier {
-    supplierID: ID!
+    supplierID: String!
     name: String!
     material: String!
     location: String!
+    suppliesManufacturers: [Manufacturer!]! @relationship(type: "SUPPLIES", direction: OUT)
+  }
+
+  type Query {
+    _empty: String
   }
 `;
 
-module.exports = { suppliersDefs };
+module.exports = typeDefs;
