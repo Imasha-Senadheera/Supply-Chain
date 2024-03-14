@@ -1,47 +1,46 @@
-const { ApolloServer } = require('apollo-server');
-const { mergeTypeDefs, mergeResolvers } = require('@graphql-tools/merge');
-const fs = require('fs');
-const path = require('path');
+const { ApolloServer, gql } = require('apollo-server');
 
-const loadFiles = (dir) =>
-  fs.readdirSync(dir)
-    .filter(file => file.endsWith('.graphql'))
-    .map(file => fs.readFileSync(path.join(dir, file), 'utf-8'));
+const suppliersResolvers = require('./Suppliers/suppliersResolvers.js');
+const manufacturersResolvers = require('./Manufacturers/manufacturersResolvers.js');
+const distributorsResolvers = require('./Distributors/distributorsResolvers.js');
+const productsResolvers = require('./Products/productsResolvers.js');
 
-// Load type definitions
-const suppliersTypeDefs = loadFiles(path.join(__dirname, './Suppliers'));
-const manufacturersTypeDefs = loadFiles(path.join(__dirname, './Manufacturers'));
-const distributorsTypeDefs = loadFiles(path.join(__dirname, './Distributors'));
-const productsTypeDefs = loadFiles(path.join(__dirname, './Products'));
+const suppliersTypeDefs = require('./Suppliers/suppliersDefs.js');
+const manufacturersTypeDefs = require('./Manufacturers/manufacturersDefs.js');
+const distributorsTypeDefs = require('./Distributors/distributorsDefs.js');
+const productsTypeDefs = require('./Products/productsDefs.js');
 
-// Merge type definitions
-const mergedTypeDefs = mergeTypeDefs([...suppliersTypeDefs, ...manufacturersTypeDefs, ...distributorsTypeDefs, ...productsTypeDefs]);
+const mergedTypeDefs = gql`
+  ${suppliersTypeDefs}
+  ${manufacturersTypeDefs}
+  ${distributorsTypeDefs}
+  ${productsTypeDefs}
+`;
 
-// Load resolvers
-const suppliersResolvers = require('./Suppliers/suppliersResolvers');
-const manufacturersResolvers = require('./Manufacturers/manufacturersResolvers');
-const distributorsResolvers = require('./Distributors/distributorsResolvers');
-const productsResolvers = require('./Products/productsResolvers');
+const mergedResolvers = [
+  suppliersResolvers,
+  manufacturersResolvers,
+  distributorsResolvers,
+  productsResolvers,
+];
 
-// Merge resolvers
-const mergedResolvers = mergeResolvers([suppliersResolvers, manufacturersResolvers, distributorsResolvers, productsResolvers]);
-
-// Create the Apollo Server instance
 const server = new ApolloServer({
   typeDefs: mergedTypeDefs,
   resolvers: mergedResolvers,
   context: ({ req }) => {
+    // You can add your authentication logic here if needed
     const token = req.headers.authorization || '';
     try {
-      const user = jwt.verify(token, 'secret-key');
-      return { user };
+      // Example JWT verification, replace with your actual authentication logic
+      // const user = jwt.verify(token, 'secret-key');
+      // return { user };
+      return {};
     } catch (error) {
       return {};
     }
   },
 });
 
-// Start the server
 server.listen({ port: 4000 }).then(({ url }) => {
   console.log(`Server running at ${url}`);
 });

@@ -1,4 +1,6 @@
-const { gql } = require('apollo-server-express');
+// suppliersDefs.js
+
+const { gql } = require('apollo-server');
 
 const suppliersDefs = gql`
   type Supplier {
@@ -6,11 +8,14 @@ const suppliersDefs = gql`
     name: String!
     material: String!
     location: String!
-    suppliesManufacturers: [Manufacturer!]!
   }
 
   type Query {
     suppliers: [Supplier!]!
+  }
+
+  type Mutation {
+    createSupplier(name: String!, material: String!, location: String!): Supplier!
   }
 `;
 

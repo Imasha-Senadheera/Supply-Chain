@@ -1,4 +1,6 @@
-const { gql } = require('apollo-server-express');
+// productsDefs.js
+
+const { gql } = require('apollo-server');
 
 const productsDefs = gql`
   type Product {
@@ -6,11 +8,14 @@ const productsDefs = gql`
     name: String!
     category: String!
     manufacturingCost: Float!
-    manufacturersProduces: [Manufacturer!]! @relationship(type: "PRODUCES", direction: IN)
   }
 
   type Query {
     products: [Product!]!
+  }
+
+  type Mutation {
+    createProduct(name: String!, category: String!, manufacturingCost: Float!): Product!
   }
 `;
 
