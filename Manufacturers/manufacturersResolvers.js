@@ -1,4 +1,5 @@
-const { driver } = require('./neo4j');
+// manufacturersResolvers.js
+const { driver } = require('../../src/neo4j');
 
 const manufacturersResolvers = {
   Query: {

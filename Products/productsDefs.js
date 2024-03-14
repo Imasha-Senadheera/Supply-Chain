@@ -1,3 +1,5 @@
+// productsDefs.js
+const { driver } = require('../../src/neo4j');
 const { gql } = require('apollo-server');
 
 const productsDefs = gql`
