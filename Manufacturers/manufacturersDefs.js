@@ -1,6 +1,6 @@
 const { gql } = require('apollo-server-express');
 
-const typeDefs = gql`
+const schema = gql`
   type Manufacturer {
     manufacturerID: String!
     name: String!
@@ -16,4 +16,4 @@ const typeDefs = gql`
   }
 `;
 
-module.exports = typeDefs;
+module.exports = { schema };
