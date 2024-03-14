@@ -32,20 +32,8 @@ const productsResolvers = {
         console.error('Error fetching products:', error);
         throw error;
       }
-    },
-    sayHello: () => 'Hello World!'
+    }
   }
 };
 
-const productResolvers = {
-  Query: {
-    products: async (_, __, { dataSources }) => {
-      return dataSources.productAPI.getAllProducts();
-    },
-  },
-};
-
-// Merge the productsResolvers and productResolvers
-const mergedResolvers = mergeResolvers([productsResolvers, productResolvers]);
-
-module.exports = mergedResolvers;
+module.exports = productsResolvers;

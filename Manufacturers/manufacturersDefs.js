@@ -1,5 +1,3 @@
-const { gql } = require('apollo-server-express');
-
 const manufacturersDefs = gql`
   type Manufacturer {
     manufacturerID: String!

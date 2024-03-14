@@ -22,11 +22,8 @@ const distributorsResolvers = {
         console.error('Error fetching distributors:', error);
         throw error;
       }
-    },
-    sayHello: () => {
-      return 'Hello World!';
     }
   }
 };
 
-module.exports = { distributorsResolvers };
+module.exports = distributorsResolvers;

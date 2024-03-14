@@ -23,8 +23,7 @@ const manufacturersResolvers = {
         console.error('Error fetching manufacturers:', error);
         throw error;
       }
-    },
-    hello: () => 'Hello World!'
+    }
   },
   Mutation: {
     createManufacturer: async (_, { manufacturerInput }) => {
@@ -58,7 +57,4 @@ const manufacturersResolvers = {
   }
 };
 
-// Merge the resolvers
-const mergedResolvers = mergeResolvers([manufacturersResolvers]);
-
-module.exports = mergedResolvers;
+module.exports = manufacturersResolvers;

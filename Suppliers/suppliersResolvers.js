@@ -3,7 +3,7 @@ const neo4j = require('neo4j-driver');
 
 const suppliersResolvers = {
   Query: {
-    suppliers: async () => {
+    suppliers: async (_, __, { dataSources }) => {
       try {
         const uri = 'bolt://localhost:7687';
         const username = 'neo4j';
@@ -23,16 +23,7 @@ const suppliersResolvers = {
         console.error('Error fetching suppliers:', error);
         throw error;
       }
-    },
-    sayHello: () => 'Hello World!' 
-  }
-};
-
-const supplierResolvers = {
-  Query: {
-    suppliers: async (_, __, { dataSources }) => {
-      return dataSources.supplierAPI.getAllSuppliers();
-    },
+    }
   },
   Mutation: {
     createSupplier: async (_, { supplierInput }, { dataSources }) => {
@@ -41,7 +32,4 @@ const supplierResolvers = {
   },
 };
 
-// Merge the two resolver objects
-const mergedResolvers = mergeResolvers([suppliersResolvers, supplierResolvers]);
-
-module.exports = mergedResolvers;
+module.exports = suppliersResolvers;
