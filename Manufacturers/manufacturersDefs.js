@@ -1,6 +1,6 @@
 const { gql } = require('apollo-server-express');
 
-const schema = gql`
+const manufacturersDefs = gql`
   type Manufacturer {
     manufacturerID: String!
     name: String!
@@ -12,8 +12,8 @@ const schema = gql`
   }
 
   type Query {
-    _empty: String
+    manufacturers: [Manufacturer!]!
   }
 `;
 
-module.exports = { schema };
+module.exports = manufacturersDefs;

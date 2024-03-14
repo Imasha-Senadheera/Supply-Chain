@@ -1,6 +1,6 @@
 const { gql } = require('apollo-server-express');
 
-const typeDefs = gql`
+const distributorsDefs = gql`
   type Distributor {
     distributorID: String!
     name: String!
@@ -9,8 +9,8 @@ const typeDefs = gql`
   }
 
   type Query {
-    _empty: String
+    distributors: [Distributor!]!
   }
 `;
 
-module.exports = typeDefs;
+module.exports = distributorsDefs;

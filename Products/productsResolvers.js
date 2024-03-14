@@ -1,3 +1,4 @@
+const { mergeResolvers } = require('@graphql-tools/merge');
 const neo4j = require('neo4j-driver');
 
 const productsResolvers = {
@@ -12,7 +13,16 @@ const productsResolvers = {
         const session = driver.session();
         const result = await session.run('MATCH (p:Product) RETURN p');
         
-        const products = result.records.map(record => record.get('p').properties);
+        // Transforming Neo4j records into the desired response format
+        const products = result.records.map(record => {
+          const { productID, name, category, manufacturingCost } = record.get('p').properties;
+          return {
+            productID,
+            name,
+            category,
+            manufacturingCost: parseFloat(manufacturingCost),
+          };
+        });
         
         session.close();
         driver.close();
@@ -23,10 +33,19 @@ const productsResolvers = {
         throw error;
       }
     },
-    sayHello: () => {
-      return 'Hello World!';
-    }
+    sayHello: () => 'Hello World!'
   }
 };
 
-module.exports = { productsResolvers };
+const productResolvers = {
+  Query: {
+    products: async (_, __, { dataSources }) => {
+      return dataSources.productAPI.getAllProducts();
+    },
+  },
+};
+
+// Merge the productsResolvers and productResolvers
+const mergedResolvers = mergeResolvers([productsResolvers, productResolvers]);
+
+module.exports = mergedResolvers;

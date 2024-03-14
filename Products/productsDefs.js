@@ -1,6 +1,6 @@
 const { gql } = require('apollo-server-express');
 
-const typeDefs = gql`
+const productsDefs = gql`
   type Product {
     productID: String!
     name: String!
@@ -10,8 +10,8 @@ const typeDefs = gql`
   }
 
   type Query {
-    _empty: String
+    products: [Product!]!
   }
 `;
 
-module.exports = typeDefs;
+module.exports = productsDefs;

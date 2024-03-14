@@ -1,3 +1,4 @@
+const { mergeResolvers } = require('@graphql-tools/merge');
 const neo4j = require('neo4j-driver');
 
 const suppliersResolvers = {
@@ -27,4 +28,20 @@ const suppliersResolvers = {
   }
 };
 
-module.exports = { suppliersResolvers };
+const supplierResolvers = {
+  Query: {
+    suppliers: async (_, __, { dataSources }) => {
+      return dataSources.supplierAPI.getAllSuppliers();
+    },
+  },
+  Mutation: {
+    createSupplier: async (_, { supplierInput }, { dataSources }) => {
+      return dataSources.supplierAPI.createSupplier(supplierInput);
+    },
+  },
+};
+
+// Merge the two resolver objects
+const mergedResolvers = mergeResolvers([suppliersResolvers, supplierResolvers]);
+
+module.exports = mergedResolvers;

@@ -1,23 +1,30 @@
 const { ApolloServer } = require('apollo-server');
 const { mergeTypeDefs, mergeResolvers } = require('@graphql-tools/merge');
+const fs = require('fs');
+const path = require('path');
 
-const { schema: suppliersDefs } = require('./Suppliers/suppliersDefs.js'); 
-const { resolvers: suppliersResolvers } = require('./Suppliers/suppliersResolvers.js');
+// Import the .graphql files
+const suppliersTypeDefs = fs.readFileSync(path.join(__dirname, './Suppliers/suppliers.graphql'), 'utf-8');
+const manufacturersTypeDefs = fs.readFileSync(path.join(__dirname, './Manufacturers/manufacturers.graphql'), 'utf-8');
+const distributorsTypeDefs = fs.readFileSync(path.join(__dirname, './Distributors/distributors.graphql'), 'utf-8');
+const productsTypeDefs = fs.readFileSync(path.join(__dirname, './Products/products.graphql'), 'utf-8');
 
-const { schema: manufacturersDefs } = require('./Manufacturers/manufacturersDefs.js');
-const { resolvers: manufacturersResolvers } = require('./Manufacturers/manufacturersResolvers.js');
+// Merge the type definitions
+const mergedTypeDefs = mergeTypeDefs([suppliersTypeDefs, manufacturersTypeDefs, distributorsTypeDefs, productsTypeDefs]);
 
-const { schema: distributorsDefs } = require('./Distributors/distributorsDefs.js');
-const { resolvers: distributorsResolvers } = require('./Distributors/distributorsResolvers.js');
+// Import the resolvers
+const suppliersResolvers = require('./Suppliers/suppliersResolvers');
+const manufacturersResolvers = require('./Manufacturers/manufacturersResolvers');
+const distributorsResolvers = require('./Distributors/distributorsResolvers');
+const productsResolvers = require('./Products/productsResolvers');
 
-const { schema: productsDefs } = require('./Products/productsDefs.js');
-const { resolvers: productsResolvers } = require('./Products/productsResolvers.js');
+// Merge the resolvers
+const mergedResolvers = mergeResolvers([suppliersResolvers, manufacturersResolvers, distributorsResolvers, productsResolvers]);
 
-const jwt = require('jsonwebtoken');
-
+// Create the Apollo Server instance
 const server = new ApolloServer({
-  typeDefs: mergeTypeDefs([suppliersDefs, manufacturersDefs, distributorsDefs, productsDefs]),
-  resolvers: mergeResolvers([suppliersResolvers, manufacturersResolvers, distributorsResolvers, productsResolvers]),
+  typeDefs: mergedTypeDefs,
+  resolvers: mergedResolvers,
   context: ({ req }) => {
     const token = req.headers.authorization || '';
     try {
@@ -29,6 +36,7 @@ const server = new ApolloServer({
   },
 });
 
+// Start the server
 server.listen({ port: 4000 }).then(({ url }) => {
   console.log(`Server running at ${url}`);
 });
