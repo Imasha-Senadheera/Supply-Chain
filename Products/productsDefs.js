@@ -14,6 +14,8 @@ const productsDefs = gql`
 
   type Mutation {
     createProduct(name: String!, category: String!, manufacturingCost: Float!): Product!
+    updateProduct(productID: String!, name: String!, category: String!, manufacturingCost: Float!): Product!
+    deleteProduct(productID: String!): Boolean!
   }
 `;
 
