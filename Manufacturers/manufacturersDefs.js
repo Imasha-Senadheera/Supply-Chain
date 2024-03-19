@@ -14,6 +14,9 @@ const manufacturersDefs = gql`
 
   type Mutation {
     createManufacturer(name: String!, product: String!, location: String!): Manufacturer!
+    registerManufacturer(name: String!, product: String!, location: String!): Manufacturer!
+    updateManufacturer(id: String!, name: String!, product: String!, location: String!): Manufacturer!
+    deleteManufacturer(id: String!): Boolean!
   }
 `;
 
