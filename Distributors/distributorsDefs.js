@@ -4,7 +4,7 @@ const distributorsDefs = gql`
   type Distributor {
     distributorID: String!
     name: String!
-    region: String!
+    location: String!
   }
 
   type Query {
@@ -12,7 +12,10 @@ const distributorsDefs = gql`
   }
 
   type Mutation {
-    createDistributor(name: String!, region: String!): Distributor!
+    createDistributor(name: String!, location: String!): Distributor!
+    registerDistributor(name: String!, location: String!): Distributor!
+    updateDistributor(id: String!, name: String!, location: String!): Distributor!
+    deleteDistributor(id: String!): Boolean!
   }
 `;
 

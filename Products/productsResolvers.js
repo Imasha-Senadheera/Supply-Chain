@@ -9,7 +9,7 @@ const rateLimiter = new RateLimiterMemory({
   duration: 60,
 });
 
-let latestId = 0; // Assuming you want to track the latest ID for new suppliers
+let latestId = 0; // Assuming you want to track the latest ID for new Product
 
 const productsResolvers = {
   Query: {
