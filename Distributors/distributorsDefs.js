@@ -2,10 +2,10 @@ const { gql } = require('apollo-server');
 
 const distributorsDefs = gql`
   type Distributor {
-    distributorID: String!
-    name: String!
-    location: String!
-  }
+  distributorID: String!
+  name: String!
+  location: String
+}
 
   type Query {
     distributors: [Distributor!]!

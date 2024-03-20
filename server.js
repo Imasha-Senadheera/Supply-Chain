@@ -26,23 +26,9 @@ const driver = neo4j.driver(
 const server = new ApolloServer({
   typeDefs: [suppliersTypeDefs, manufacturersTypeDefs, distributorsTypeDefs, productsTypeDefs],
   resolvers: [suppliersResolvers, manufacturersResolvers, distributorsResolvers, productsResolvers],
-  context: ({ req }) => {
-    cors();
-
-    const token = req.headers.authorization || '';
-
-    try {
-      if (req.body.operationName === "LoginUser" || req.body.operationName === "RegisterUser") {
-        return { driver };
-      }
-      const expiresIn = 6;
-
-      const user = jwt.verify(token, process.env.JWT_SECRET, { exp: Math.floor(Date.now() / 1000) + expiresIn });
-      return { user, driver };
-    } catch (err) {
-      throw new AuthenticationError('Invalid or expired token');
-    }
-  },
+  introspection: true,
+  context: { driver },
+ 
   schemaDirectives: {
     rateLimit: createRateLimitDirective({
       identifyContext: (driver) => driver.user ? driver.user.id : '',

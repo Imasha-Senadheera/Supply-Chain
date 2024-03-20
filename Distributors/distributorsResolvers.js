@@ -17,7 +17,12 @@ const distributorsResolvers = {
       try {
         const session = driver.session();
         const result = await session.run('MATCH (d:Distributor) RETURN d');
-        const distributors = result.records.map(record => record.get('d').properties);
+        const distributors = result.records.map(record => {
+          const properties = record.get('d').properties;
+          // Check if location is null and provide a default value if needed
+          properties.location = properties.location || "Unknown";
+          return properties;
+        });
         session.close();
         return distributors;
       } catch (error) {
